@@ -50,11 +50,11 @@ footer{padding:24px 4px;text-align:center;color:var(--muted);font-size:12px}
 <section class="panel">
  <div class="coach-head">
    <div><h2>AI COACH NOTE</h2><div class="date">SAYAKA · AI COACH</div></div>
-   <div class="date">2026.09.27 · Latest Analysis</div>
+   <div class="date" id="analysis-date">2026.09.27 · Latest Analysis</div>
  </div>
- <div class="row"><div class="label good">GOOD</div><div>9/27は10.94kmを平均約6:15/kmで走れていて、9/23の9.02km・6:20/kmから距離を伸ばしながらペースも落としていない。持久力はちゃんと前進してるわ。</div></div>
- <div class="row"><div class="label bad">BAD</div><div>目標はHYROXで5:00/kmを8回。今は長く走れる力が伸びている一方、5:00/km前後を疲労下で繰り返す力との間にはまだギャップがあるわ。</div></div>
- <div class="row"><div class="label next">NEXT</div><div><ol>
+ <div class="row"><div class="label good">GOOD</div><div id="coach-good">9/27は10.94kmを平均約6:15/kmで走れていて、9/23の9.02km・6:20/kmから距離を伸ばしながらペースも落としていない。持久力はちゃんと前進してるわ。</div></div>
+ <div class="row"><div class="label bad">BAD</div><div id="coach-bad">目標はHYROXで5:00/kmを8回。今は長く走れる力が伸びている一方、5:00/km前後を疲労下で繰り返す力との間にはまだギャップがあるわ。</div></div>
+ <div class="row"><div class="label next">NEXT</div><div><ol id="coach-next">
    <li><b>今週：</b>30〜40分のイージーランを1回。速くしようとせず、疲労を残さない。</li>
    <li><b>次のポイント練習：</b>1km × 3本を5:20〜5:30/km付近から開始。各本を揃えることを優先する。</li>
    <li><b>2027年3月へ：</b>ロング走で土台を伸ばしながら、1km反復を3本→4本→5本…→8本へ増やし、最終的に5:00/kmへ近づける。</li>
@@ -62,12 +62,12 @@ footer{padding:24px 4px;text-align:center;color:var(--muted);font-size:12px}
 </section>
 
 <section class="panel">
- <div class="coach-head"><h2>LATEST RUN</h2><div class="date">2026.09.27</div></div>
+ <div class="coach-head"><h2>LATEST RUN</h2><div class="date" id="run-date">2026.09.27</div></div>
  <div class="metrics">
-   <div class="metric"><small>DISTANCE</small><strong>10.94 km</strong></div>
-   <div class="metric"><small>AVG PACE</small><strong>6:15 /km</strong></div>
-   <div class="metric"><small>AVG HEART RATE</small><strong>151 bpm</strong></div>
-   <div class="metric"><small>AVG CADENCE</small><strong>172 spm</strong></div>
+   <div class="metric"><small>DISTANCE</small><strong id="run-distance">10.94 km</strong></div>
+   <div class="metric"><small>AVG PACE</small><strong id="run-pace">6:15 /km</strong></div>
+   <div class="metric"><small>AVG HEART RATE</small><strong id="run-hr">151 bpm</strong></div>
+   <div class="metric"><small>AVG CADENCE</small><strong id="run-cadence">172 spm</strong></div>
  </div>
 </section>
 
@@ -76,11 +76,27 @@ footer{padding:24px 4px;text-align:center;color:var(--muted);font-size:12px}
  <div class="sub">HYROX PRO SINGLES（2027.03）</div>
  <div class="progress"><span></span></div>
  <div style="display:flex;justify-content:space-between;gap:20px">
-   <div><span class="sub">最新平均ペース</span><br><b style="font-size:25px">6:15/km</b></div>
+   <div><span class="sub">最新平均ペース</span><br><b id="target-latest-pace" style="font-size:25px">6:15/km</b></div>
    <div style="text-align:right"><span class="sub">目標ペース</span><br><b style="font-size:25px">5:00/km</b></div>
  </div>
 </section>
 <footer>ROAD TO HYROX PRO · CrossFit × Running · AI Coach SAYAKA</footer>
 </main>
+<script>
+fetch('./training-data.json?ts=' + Date.now())
+ .then(r => r.json())
+ .then(d => {
+   document.getElementById('analysis-date').textContent = d.analysisDate + ' · Latest Analysis';
+   document.getElementById('coach-good').textContent = d.good;
+   document.getElementById('coach-bad').textContent = d.bad;
+   document.getElementById('coach-next').innerHTML = d.next.map(x => '<li>' + x + '</li>').join('');
+   document.getElementById('run-date').textContent = d.latestRun.date;
+   document.getElementById('run-distance').textContent = d.latestRun.distance + ' km';
+   document.getElementById('run-pace').textContent = d.latestRun.pace + ' /km';
+   document.getElementById('run-hr').textContent = d.latestRun.avgHr + ' bpm';
+   document.getElementById('run-cadence').textContent = d.latestRun.cadence + ' spm';
+   document.getElementById('target-latest-pace').textContent = d.latestRun.pace + '/km';
+ }).catch(() => {});
+</script>
 </body>
 </html>
