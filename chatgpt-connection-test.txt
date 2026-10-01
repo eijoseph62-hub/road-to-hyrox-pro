@@ -1,0 +1,4 @@
+ChatGPT GitHub connection test
+Date: 2026-10-01
+Purpose: Verify that ChatGPT can safely write to the road-to-hyrox-pro repository.
+No website files were modified.
