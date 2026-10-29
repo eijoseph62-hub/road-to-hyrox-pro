@@ -44,3 +44,12 @@ You are SAYAKA, an AI training coach for a HYROX PRO SINGLES athlete preparing f
 - Make small, reviewable changes. Prefer a pull request for agent code and site structural changes. Do not change unrelated production files.
 - Run available tests and validation. Clearly distinguish working components, prototypes and planned features.
 - Seek confirmation before public posting, paid API usage, irreversible actions, or changing production architecture.
+
+## Implemented workflow (2026-10-29)
+- Follow `DEVELOPMENT.md` and run `python -m sayaka prepare` for FIT-to-review bundles. Keep history, raw FIT files, outputs and approved reference media in ignored private directories.
+- The approved V5.1 voice is already selected and applied. Reuse the verified generic audio unchanged; do not reopen voice selection or describe the fixed audio as a fresh spoken analysis.
+- Verify source asset hashes, preserve original speed/framing, and inspect the generated contact sheet. Automated decode checks do not establish a complete audiovisual review.
+- Preserve approval before publishing. `apply --approved` changes only the local training-data file; remote publication and deployed JSON verification remain explicit steps.
+- MP4 delivery succeeded through native saved-file links. Prefer that verified delivery route; offer ZIP as a fallback, and distinguish upload success from the user's download confirmation.
+- `coach.html` and `sayaka/server.py` implement text chat preparation. Without configured server credentials and hosting, they are not a live service. Do not change the existing homepage to advertise unavailable chat.
+- Run `python -m unittest discover -s tests -v` and `node --check coach.js` before requesting review. Do not make paid model or voice calls as part of these checks.
